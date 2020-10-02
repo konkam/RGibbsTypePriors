@@ -1,15 +1,17 @@
 Package: RGibbsTypePriors
-Title: What the Package Does (One Line, Title Case)
+Title: Computing clusters prior distribution for Gibbs-type processes
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    c(person(given = "François",
+           family = "Deslandes",
+           role = c("aut"),
+           email = "francois.deslandes@inrae.fr"),
+    person(given = "Guillaume",
+           family = "KON KAM KING",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "guillaume.kon-kam-king@inrae.fr"))
+Description: This package provides a list of functions to compute exactly or to approximate the prior distribution for Gibbs-type processes. This can be either used for Bayesian Nonparametric prior calibration or for more general exploration of Gibbs-type processes.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
