@@ -12,6 +12,8 @@ Authors@R:
            email = "guillaume.kon-kam-king@inrae.fr"))
 Description: This package provides a list of functions to compute exactly or to approximate the prior distribution for Gibbs-type processes. This can be either used for Bayesian Nonparametric prior calibration or for more general exploration of Gibbs-type processes.
 License: MIT + file LICENSE
+URL: https://github.com/konkam/RGibbsTypePriors
+BugReports: https://github.com/konkam/RGibbsTypePriors/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
