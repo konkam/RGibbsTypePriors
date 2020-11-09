@@ -1,0 +1,121 @@
+#' Computes the Gibbs type prior number of cluster
+#'
+#' @param	k			The value for k 
+#' @param	n			The value for n
+#' @param	beta		The for beta 
+#' @param	sigma		The value for sigma 
+#' @param	prec		The number of bits of precision used during internal computation
+#'	@param	rec		Recursive formulation of Cnk
+#' @return	The density in k for the prior distribution on the number of clusters for a Normalised Generalised Gamma process
+#'
+#' @examples
+#' pkn_ngg(1:100, 100, 1.2, 0.8, prec=1000)
+#'
+#' @export
+#' @importFrom Rmpfr mpfr
+#' @useDynLib	RGibbsTypePriors, .registration=TRUE, .fixes="C_"
+pkn_ngg=function(k, n, beta, sigma, prec=53, rec=F){
+	stopifnot(beta>=0, sigma<1, sigma>=0, all(k>=0), n>=0, prec>0, length(n)==1);
+
+	if(!@HAS_ARB@){
+		return(pkn_ngg.mpfr(k, n, beta, sigma, prec=prec));
+	}
+
+	if(rec){
+		res=lapply(k, function(k){
+			res=.Call(C_pkn_ngg_rec_api_call, 
+				k,
+				n,
+				beta,
+				sigma,
+				prec
+			);
+		});
+	} else {
+		res=lapply(k, function(k){
+			res=.Call(C_pkn_ngg_api_call, 
+				k,
+				n,
+				beta,
+				sigma,
+				prec
+			);
+		});
+	}
+	pkn=mpfr(unlist(lapply(res, function(r){r[1];})), precBits=prec);
+	radius=as.numeric(unlist(lapply(res, function(r){r[2];})));
+	accu=as.integer(unlist(lapply(res, function(r){r[3];})));
+
+	return(list(pkn=pkn, radius=radius, accuracy_bits=accu, k=k, n=n, sigma=sigma, beta=beta));
+}
+
+#' Computes the weights for Gibbs type prior number of cluster
+#'
+#' @param	n			The value for n
+#' @param	k			The value for k
+#' @param	beta		The value for beta
+#' @param	sigma		The value for sigma
+#' @param	prec		The number of bits of precision used during internal computation
+#' @return	The Vnk weights for a Normalised Generalised Gamma process
+#' @export
+#' @importFrom Rmpfr mpfr
+#' @useDynLib	RGibbsTypePriors, .registration=TRUE, .fixes="C_"
+vnk_ngg=function(n, k, beta, sigma, prec=53){
+	stopifnot(beta>=0, sigma<1, sigma>=0, k>=0, n>=0, prec>0);
+
+	if(!@HAS_ARB@){
+		return(vnk_ngg.mpfr(k, n, beta, sigma, prec=prec));
+	}
+
+	res=.Call(C_vnk_ngg_api_call, 
+		k=as.integer(k),
+		n=as.integer(n),
+		beta=as.double(beta),
+		sigma=as.double(sigma),
+		prec=as.integer(prec)
+	);
+	vnk=mpfr(res[1], precBits=prec);
+	radius=as.numeric(res[2]);
+	accu=as.integer(res[3]);
+	return(list(vnk=vnk, radius=radius, accuracy_bits=accu));
+}
+
+#' Computes the generalized binomial coefficients for Gibbs type prior number of cluster
+#'
+#' @param	n			The value for n
+#' @param	k			The value for k
+#' @param	sigma		The value for sigma
+#' @param	prec		The number of bits of precision used during internal computation
+#' @param	rec		Use the recursive formula
+#' @return	The value of the generalized binomial coefficient
+#' @export
+#' @importFrom Rmpfr mpfr
+#' @useDynLib	RGibbsTypePriors, .registration=TRUE, .fixes="C_"
+cnk_ngg=function(n, k, sigma, prec=53, rec=F){
+	stopifnot(sigma<1, sigma>=0, k>=0, n>=0, prec>0);
+
+	if(!@HAS_ARB@){
+		return(cnk_ngg.mpfr(k, n, sigma, prec=prec));
+	}
+
+	if(rec){
+		res=.Call(C_cnk_ngg_rec_api_call, 
+			k=as.integer(k),
+			n=as.integer(n),
+			sigma=as.double(sigma),
+			prec=as.integer(prec)
+		);
+	} else {
+		res=.Call(C_cnk_ngg_api_call, 
+			k=as.integer(k),
+			n=as.integer(n),
+			sigma=as.double(sigma),
+			prec=as.integer(prec)
+		);
+	}
+
+	cnk=mpfr(res[1], precBits=prec);
+	radius=as.numeric(res[2]);
+	accu=as.integer(res[3]);
+	return(list(cnk=cnk, radius=radius, accuracy_bits=accu));
+}
