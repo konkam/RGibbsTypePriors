@@ -32,6 +32,13 @@ devtools::install_github("konkam/RGibbsTypePriors")
 
 This is a basic example which shows you how to solve a common problem:
 
+
+```r
+library(RGibbsTypePriors)
+res=pkn_ngg(1:100, 100, 1.2, 0.8, prec=1000)
+plot(res$k, as.numeric(res$pkn))
+```
+
 <img src="man/figures/README-example-1.png" title="plot of chunk example" alt="plot of chunk example" width="100%" />
 
 
