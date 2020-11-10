@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of RGibbsTypePriors is to ...
+The goal of RGibbsTypePriors is to Compute clusters prior distribution for Gibbs-type processes
+
 
 ## Installation
 
@@ -38,23 +39,10 @@ devtools::install_github("konkam/RGibbsTypePriors")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, echo = FALSE}
 library(RGibbsTypePriors)
-## basic example code
+res=pkn_ngg(1:100, 100, 1.2, 0.8, prec=1000)
+plot(res$k, as.numeric(res$pkn))
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

@@ -2,7 +2,6 @@
 
 export(cnk_ngg)
 export(cnk_ngg.mpfr)
-export(fbind)
 export(pkn_ngg)
 export(pkn_ngg.mpfr)
 export(vnk_ngg)
