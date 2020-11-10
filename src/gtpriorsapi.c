@@ -1,6 +1,8 @@
 #include "config.h"
 #ifdef HAVE_ARB_H
 
+#include <limits.h>
+
 #include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Utils.h>
@@ -41,7 +43,7 @@ void arb_to_sexp(SEXP *res, arb_t x, int prec){
 	SET_STRING_ELT(*res, 1, mkChar(s));
 
 	int accu;
-	if(arb_is_zero(x)){
+	if(arb_is_zero(x) || arb_rel_accuracy_bits(x)>INT_MAX){
 		accu=prec;
 	} else {
 		accu=arb_rel_accuracy_bits(x);
