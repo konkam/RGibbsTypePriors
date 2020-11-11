@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rm -f config.*
+rm -f src/Makedeps
+rm -f src/*.o
+rm -f src/*.so
+rm -f src/*.rds
+rm -f R/gtpriors.R
+rm -f src/config.h
+
+
