@@ -1,5 +1,4 @@
 #include "config.h"
-#ifdef HAVE_ARB_H
 
 #include <limits.h>
 
@@ -8,9 +7,11 @@
 #include <R_ext/Utils.h>
 #include <R_ext/Rdynload.h>
 
+#ifdef HAVE_ARB_H
 #include <mpfr.h>
 #include <arb.h>
 #include <arf.h>
+#endif
 
 #include "gtpriors.h"
 #include "gtpriorsapi.h"
@@ -20,13 +21,29 @@ void R_init_RGibbsTypePriors(DllInfo *info){
 	R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
 	R_useDynamicSymbols(info, FALSE);
 	R_forceSymbols(info, TRUE);
+#ifdef HAVE_ARB_H
 	initialize_memoization(-1, -1, 0);
+#endif
 }
 
 void R_unload_RGibbsTypePriors(DllInfo *info){
+#ifdef HAVE_ARB_H
 	cleanup_memoization();
+#endif
 }
 
+#ifndef HAVE_ARB_H
+SEXP gtprior_empty5(SEXP k, SEXP n, SEXP beta, SEXP sigma, SEXP prec){
+	return(0);
+}
+
+SEXP gtprior_empty4(SEXP k, SEXP n, SEXP sigma, SEXP prec){
+	return(0);
+}
+
+#endif
+
+#ifdef HAVE_ARB_H
 void arb_to_sexp(SEXP *res, arb_t x, int prec){
 	*res=PROTECT(allocVector(STRSXP, 3));
 	int ndec=ceil(prec*log10(2))+50;

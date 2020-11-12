@@ -1,4 +1,5 @@
-#' @importFrom Rmpfr factorialMpfr igamma chooseMpfr mpfr
+#' @importFrom Rmpfr factorialMpfr igamma chooseMpfr mpfr mpfrVersion
+#' @importFrom stats pgamma
 #' @export
 #' @rdname vnk_ngg
 vnk_ngg.mpfr=function(n, k, beta, sigma, prec=53){
@@ -12,7 +13,12 @@ vnk_ngg.mpfr=function(n, k, beta, sigma, prec=53){
 	}
 	cst=exp(beta)*sigma^(k-1)/factorialMpfr(n-1, precBits=prec);
 	i=0:(n-1);
-	summands=chooseMpfr(n-1, i)*(-1)^i*beta^(i/sigma)*igamma(k-i/sigma, beta);
+	if(Rmpfr::mpfrVersion()>= "3.2.0"){
+		summands=chooseMpfr(n-1, i)*(-1)^i*beta^(i/sigma)*igamma(k-i/sigma, beta);
+	} else {
+		warning(paste0("Mpfr version is not >= 3.2.0, computation will be inaccurate or might not work"), call.=F);
+		summands=chooseMpfr(n-1, i)*(-1)^i*beta^(i/sigma)*gamma(k-i/as.numeric(sigma))*pgamma(as.numeric(beta), k-i/as.numeric(sigma), lower.tail=F)
+	}
 	vnk=sum(summands)*cst;
 	return(list(vnk=vnk, radius=NA, accu=NA));
 }

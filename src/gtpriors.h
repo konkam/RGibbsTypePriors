@@ -1,3 +1,4 @@
+#ifdef HAVE_ARB_H
 #include <arf.h>
 #include <arb.h>
 #include <acb.h>
@@ -25,4 +26,4 @@ void cnk_ngg(arb_t *c, unsigned int prec, unsigned int n, unsigned int k, double
 void cnk_ngg_rec(arb_t *cnk, unsigned int prec, unsigned int n, unsigned int k, double sigma);
 void pkn_ngg(arb_t *p, unsigned int prec, unsigned int k, unsigned int n, double beta, double sigma);
 void pkn_ngg_rec(arb_t *p, unsigned int prec, unsigned int k, unsigned int n, double beta, double sigma);
-
+#endif
