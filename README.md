@@ -21,6 +21,9 @@ An application of the functions implemented in this package was presented here:
 
 Bystrova, D., Arbel, J., Kon Kam King, G., Deslandes, F. (2021) Approximating the clusters' prior distribution in Bayesian nonparametric models,  Third Symposium on Advances in Approximate Bayesian Inference, https://openreview.net/forum?id=J0SSW5XeWUY
 
+Please cite it as a reference if you use the package.
+
+
 ## Installation
 
 
