@@ -102,7 +102,7 @@ void cnk_ngg(arb_t *cnk, unsigned int prec, unsigned int n, unsigned int k, doub
 		arb_bin_uiui(bin, k, i, prec);
 
 		arb_mul_si(temp1, sigma_arb, -i, prec);
-		arb_rising_ui_bs(rifac, temp1, n, prec);
+		arb_rising_ui(rifac, temp1, n, prec);
 		
 		arb_mul_si(temp0, bin, sign, prec);
 		arb_mul(temp1, temp0, rifac, prec);
