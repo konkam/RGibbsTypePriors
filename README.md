@@ -33,3 +33,8 @@ You can install the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("konkam/RGibbsTypePriors")
 ```
+
+
+The package depends on the [Arb](https://arblib.org/) library by F. Johansson:
+
+F. Johansson. “Arb: efficient arbitrary-precision midpoint-radius interval arithmetic”, IEEE Transactions on Computers, 66(8):1281-1292, 2017. DOI: 10.1109/TC.2017.2690633.
